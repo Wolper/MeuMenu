@@ -1,23 +1,5 @@
 $(function () {
 
-
-
-
-    //Impede o encaminhamento do formulário de cadastro via PHP
-    $('#formCad').bind('submit', function (e) {
-        e.preventDefault();
-    });
-    //Impede o encaminhamento do formulário de login via PHP
-    $('#formLogin').bind('submit', function (e) {
-        e.preventDefault();
-    });
-    //Impede o encaminhamento do formulário de login via PHP
-    $('#formCadRest').bind('submit', function (e) {
-        e.preventDefault();
-
-
-    });
-
     //Requisição ajax puxa os dados do banco relativo aos estados da federação e encaminha para o select de cadastro da empresa
     $('#selectEstado').focus(function () {
         $.ajax({
@@ -55,100 +37,30 @@ $(function () {
         }
         );
     });
-});
+    $('input[name=passwordRepite]').keypress(function () {
+        var email = $('input[name=email]').val();
+        var senha1 = $('input[name=password]').val();
+        var senha2 = $('input[name=passwordRepite]').val();
 
-//------------------------------------------------------------------------------
-//Função realiza o login do usuário e o encaminha para o seu perfil
-function login() {
-
-    var dados = $('#formLogin').serialize();
-
-    $.ajax({
-        type: 'POST',
-        url: 'http://localhost/ProjetoMeuMenu/ajax/loginUser',
-        data: dados,
-//            dataType: 'json',
-        success: function (r) {
-
-            if (r === 'true') {
-                window.location.href = "http://localhost/ProjetoMeuMenu/logado";
+        if (senha1.length < 8) {
+            $('#divCad').html('Senhas devem conter ao menos 8 dígitos!');
+      
+        } else {
+            if (email !== '' && senha1 !== '' && senha2 !== '') {
+                if (senha1 !== senha2) {
+                    $('#divCad').html('As senhas devem ser iguais!');
+                  
+                } else {
+                    $('#divCad').html('');
+                  
+                }
+            } else {
+                $('#divCad').html('Não é possível cadastrar elementos vazios!');
+            
             }
-            if (r === 'false') {
-                var aviso = 'Usuário ou senha inválidos!';
-                $('#divLogin').html(aviso);
-                $('input[name=email]').val('');
-                $('input[name=password]').val('');
-            }
-        },
-        error: function () {}
+        }
     });
-}
-
-//------------------------------------------------------------------------------
-//Função realiza o cadastro do usuário através com e-mail e senha
-function cadastrarUsuario() {
-
-    if (comparaSenhas() === true) {
-
-        var dados = $('#formCad').serialize();
-
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost/ProjetoMeuMenu/ajax/addUser',
-            data: dados,
-//            dataType: 'json',
-            success: function (r) {
-                if (r === 'true') {
-                    window.location.href = "http://localhost/ProjetoMeuMenu/logado";
-//                    $('#divCad').html('Falta só mais um pouco...');
-//                    window.setTimeout(function () {
-//                        $('#divCad').html(setFormCad());
-//                    }, 2000);
-
-                }
-                if (r === 'false') {
-                    var aviso = "Já existe um usuário cadastrado com este e-mail!";
-                    $('#divCad').html(aviso);
-                    $('input[name=email]').val('');
-                    $('input[name=password]').val('');
-                    $('input[name=passwordRepite]').val('');
-                }
-            },
-            error: function () {}
-        });
-    }
-}
-
-//------------------------------------------------------------------------------            
-//Função finaliza o cadastro do usuário com a inserção dos dados da empresa e seu representante
-function cadastrarRestaurante() {
-//    if (verificaEspacosBranco()) {
-        var dados = $('#formCadRest').serialize();
-
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost/ProjetoMeuMenu/ajax/addRestaurante',
-            data: dados,
-            success: function (r) {
-                if (r === 'true') {
-                    window.location.href = "http://localhost/ProjetoMeuMenu/logado";
-                }
-                if (r === 'false') {
-                    var aviso = "Cadastro não efetuado, tente mais tarde!";
-                    $('#divCad').html(aviso);
-//                $('input[name=cnpjEmpresa]').val('');
-                }
-            },
-            error: function () {}
-        });
-//    }
-}
-
-function verificaEspacosBranco() {
-    if ($('input[name=nome]').val() === '') {
-        return false;
-    }
-}
+});
 
 //------------------------------------------------------------------------------            
 //Função compara os dois imputs de senha no momento do cadastro do usuário

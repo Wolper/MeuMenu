@@ -1,5 +1,4 @@
-<div id="divCad"></div>
-<form id='formCad' method='POST' >
+<form method='POST' action="cadastroUser/addUser" >
     Email:<br>
     <input type='email' name='email' required="" /><br>
     Senha:<br>
@@ -7,8 +6,6 @@
     Repita a Senha:<br>
     <input type='password' name='passwordRepite' required='' /><br>
 
-    <input type='submit' value='Enviar' onclick="cadastrarUsuario()" />
+    <input type='submit' value='Enviar' />
 </form>
-
-
-
+<div id="divCad"><?= (isset($_GET['false'])) ? 'Já existe usuário com este e-mail' : '' ?></div>

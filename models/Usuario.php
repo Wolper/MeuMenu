@@ -24,10 +24,10 @@ class Usuario extends Conn {
                 //retorna o id do usuário para adicionar na sessão
                 return($this->conn->fetch()['user_id']);
             } else {
-                return FALSE;
+                return false;
             }
         } else {
-            return TRUE;
+            return true;
         }
     }
 

@@ -6,14 +6,14 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Meu site</title>
+        <title>Meu Menu</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="<?= BASE_URL?>assets/css/style.css" />
         
     </head>
     <body>
-        <h1>Este é o topo</h1>
+        <h1>Este é o topo do Meu Menu</h1>
         <a href="<?= BASE_URL?>">Home</a>
         <a href="<?= BASE_URL.'cadastroUser'?>">Cadastre seu restaurante</a>
         <a href="<?= BASE_URL.'login'?>">Entrar</a>

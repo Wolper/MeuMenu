@@ -1,5 +1,4 @@
-<div id="divCad"></div>
-<form id='formCadRest' method='POST' >
+<form method='POST' action="cadastroRestaurante/addRestaurante" >
     <h4>Dados do Proprietário ou Responsável</h4>
     Nome do proprietário:<br>
     <input type='text' name='nome' required=""  /><br>
@@ -29,5 +28,6 @@
     Cidade:<br>
     <select id='selectCidade' name='cidadeEmpresa' required="" >  
     </select><br><br>
-    <input type='submit' value='Enviar' name="cadastroRestaurante" onclick="cadastrarRestaurante()" />
+    <input type='submit' value='Enviar' name="cadastroRestaurante" />
 </form>
+<div id="divLogin"><?= (isset($_GET['false'])) ? 'Não foi possível cadastrar seu restaurante, tente mais tarde!' : '' ?></div>

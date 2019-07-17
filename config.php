@@ -4,7 +4,7 @@ require './environment.php';
 // CONFIGRAÇÕES DO BANCO ####################
 
 if (ENVIRONMENT == "development"):
-    define("BASE_URL", "http://localhost/ProjetoMeuMenu/");
+    define("BASE_URL", "http://localhost/MeuMenu/");
     define('DBSA', 'meumenu');
     define('HOST', 'localhost');
     define('USER', 'root');
@@ -17,4 +17,3 @@ else:
     define('USER', 'root');
     define('PASS', '');
 endif;
-
