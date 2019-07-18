@@ -37,6 +37,36 @@ $(function () {
         }
         );
     });
+    
+    comparaSenhas();
+//    $('input[name=passwordRepite]').keypress(function () {
+//        var email = $('input[name=email]').val();
+//        var senha1 = $('input[name=password]').val();
+//        var senha2 = $('input[name=passwordRepite]').val();
+//
+//        if (senha1.length < 8) {
+//            $('#divCad').html('Senhas devem conter ao menos 8 dígitos!');
+//      
+//        } else {
+//            if (email !== '' && senha1 !== '' && senha2 !== '') {
+//                if (senha1 !== senha2) {
+//                    $('#divCad').html('As senhas devem ser iguais!');
+//                  
+//                } else {
+//                    $('#divCad').html('');
+//                  
+//                }
+//            } else {
+//                $('#divCad').html('Não é possível cadastrar elementos vazios!');
+//            
+//            }
+//        }
+//    });
+});
+
+//------------------------------------------------------------------------------            
+//Função compara os dois imputs de senha no momento do cadastro do usuário
+function comparaSenhas() {
     $('input[name=passwordRepite]').keypress(function () {
         var email = $('input[name=email]').val();
         var senha1 = $('input[name=password]').val();
@@ -60,31 +90,6 @@ $(function () {
             }
         }
     });
-});
-
-//------------------------------------------------------------------------------            
-//Função compara os dois imputs de senha no momento do cadastro do usuário
-function comparaSenhas() {
-    var email = $('input[name=email]').val();
-    var senha1 = $('input[name=password]').val();
-    var senha2 = $('input[name=passwordRepite]').val();
-
-    if (senha1.length < 8) {
-        alert('Senhas devem conter ao menos 8 dígitos!');
-        return false;
-    } else {
-        if (email !== '' && senha1 !== '' && senha2 !== '') {
-            if (senha1 !== senha2) {
-                alert('As senhas devem ser iguais!');
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            alert('Não é possível cadastrar elementos vazios!');
-            return false;
-        }
-    }
 }
 
 //##############################################################################

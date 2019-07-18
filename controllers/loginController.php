@@ -19,7 +19,7 @@ class loginController extends Controller implements interfaceController {
             //Se tiver usuário cadastrado, sistema direciona o usuário para seu perfil,
             //caso contrário, redireciona para a página de login
             if ($u->login($post) == FALSE) {
-                header("Location:../login?false");
+                header("Location:../login?login=false");
             } else {
                 //retorna da o Id do usuário para ser inserido na sessão e direciona para o perfil do usuário
                 Session::setValue('user_id', $u->login($post));

@@ -27,7 +27,7 @@ class cadastroUserController extends Controller implements interfaceController {
             } else {
                 /*redireciona para o formulário de cadastro
                 emitindo msg de duplicidade de e-mail*/
-                header("Location:../cadastroUser?false");
+                header("Location:../cadastroUser?addUser=false");
             }
         }
     }

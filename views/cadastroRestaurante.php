@@ -30,4 +30,4 @@
     </select><br><br>
     <input type='submit' value='Enviar' name="cadastroRestaurante" />
 </form>
-<div id="divLogin"><?= (isset($_GET['false'])) ? 'Não foi possível cadastrar seu restaurante, tente mais tarde!' : '' ?></div>
+<div id="divLogin"><?= (isset($_GET['addRest']) && $_GET['addRest']='false') ? 'Não foi possível cadastrar seu restaurante, tente mais tarde!' : '' ?></div>

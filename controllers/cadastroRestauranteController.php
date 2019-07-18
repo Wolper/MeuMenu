@@ -35,7 +35,7 @@ class cadastroRestauranteController extends Controller implements interfaceContr
             if ($u->adicionar($data)) {
                 header("Location:../logado");
             } else {
-                header("Location:../login?false");
+                header("Location:../cadastroRestaurante?addRest=false");
             }
         }
     }

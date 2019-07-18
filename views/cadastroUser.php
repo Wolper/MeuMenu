@@ -8,4 +8,4 @@
 
     <input type='submit' value='Enviar' />
 </form>
-<div id="divCad"><?= (isset($_GET['false'])) ? 'Já existe usuário com este e-mail' : '' ?></div>
+<div id="divCad"><?= (isset($_GET['addUser']) && $_GET['addUser']='false') ? 'Já existe usuário com este e-mail' : '' ?></div>

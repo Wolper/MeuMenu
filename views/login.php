@@ -6,4 +6,4 @@
     <!-- <input type="submit" value="Entrar" onclick="login()" /><br/> -->
     <input type="submit" value="Entrar"/><br/>
 </form>
-<div id="divLogin"><?= (isset($_GET['false'])) ? 'E-mail ou senha inválidos' : '' ?></div>
+<div id="divLogin"><?= (isset($_GET['login']) && $_GET['login']='false') ? 'E-mail ou senha inválidos' : '' ?></div>
