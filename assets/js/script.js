@@ -4,7 +4,7 @@ $(function () {
     $('#selectEstado').focus(function () {
         $.ajax({
             type: 'POST',
-            url: 'http://localhost/ProjetoMeuMenu/ajax/loadEstados',
+            url: 'http://localhost/MeuMenu/ajax/loadEstados',
             dataType: 'json',
             success: function (json) {
                 //Recebe o json de UF e monta os OPTIONS correspondentes
@@ -24,7 +24,7 @@ $(function () {
 
         $.ajax({
             type: 'POST',
-            url: 'http://localhost/ProjetoMeuMenu/ajax/loadCidades',
+            url: 'http://localhost/MeuMenu/ajax/loadCidades',
             data: {estado_id: estado_id},
             dataType: 'json',
             success: function (json) {
@@ -37,31 +37,25 @@ $(function () {
         }
         );
     });
-    
+
+    //Requisição ajax puxa os dados do banco relativo às categorias dos itens do cardápio e encaminha para o select de cadastro de item de menu
+    $('#selectCategoria').focus(function () {
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost/MeuMenu/ajax/loadCategorias',
+            dataType: 'json',
+            success: function (json) {
+                //Recebe o json de Categorias e monta os OPTIONS correspondentes
+                for (var i in json) {
+                    $('#selectCategoria').append('<option value="' + json[i].category_id + '">' + json[i].name_category + '</option>');
+                }
+            },
+            error: function () {}
+        });
+    });
+
+    //Chamada da função ao cadastrar usuário, verifica se ambas senhas são iguais
     comparaSenhas();
-//    $('input[name=passwordRepite]').keypress(function () {
-//        var email = $('input[name=email]').val();
-//        var senha1 = $('input[name=password]').val();
-//        var senha2 = $('input[name=passwordRepite]').val();
-//
-//        if (senha1.length < 8) {
-//            $('#divCad').html('Senhas devem conter ao menos 8 dígitos!');
-//      
-//        } else {
-//            if (email !== '' && senha1 !== '' && senha2 !== '') {
-//                if (senha1 !== senha2) {
-//                    $('#divCad').html('As senhas devem ser iguais!');
-//                  
-//                } else {
-//                    $('#divCad').html('');
-//                  
-//                }
-//            } else {
-//                $('#divCad').html('Não é possível cadastrar elementos vazios!');
-//            
-//            }
-//        }
-//    });
 });
 
 //------------------------------------------------------------------------------            
@@ -74,19 +68,19 @@ function comparaSenhas() {
 
         if (senha1.length < 8) {
             $('#divCad').html('Senhas devem conter ao menos 8 dígitos!');
-      
+
         } else {
             if (email !== '' && senha1 !== '' && senha2 !== '') {
                 if (senha1 !== senha2) {
                     $('#divCad').html('As senhas devem ser iguais!');
-                  
+
                 } else {
                     $('#divCad').html('');
-                  
+
                 }
             } else {
                 $('#divCad').html('Não é possível cadastrar elementos vazios!');
-            
+
             }
         }
     });

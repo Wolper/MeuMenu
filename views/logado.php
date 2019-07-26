@@ -6,3 +6,8 @@
     <li>Meus dados</li>
     <li>Configurações</li>
 </ul>
+<div>
+    <h3>Restaurante Cadastrado</h3>
+    <h4>Nome fantasia do restaurante ... Puxar do DB via ajax ...</h4>
+    <a href="<?= BASE_URL . 'cadastroMenu'?>">Adicionar Menu</a>
+</div>

@@ -21,5 +21,10 @@ class ajaxController extends Controller implements interfaceController {
         $r = new Restaurante();
         echo json_encode($r->getCidades());
     }
+    
+    public function loadCategorias() {
+        $m = new Menu();
+        echo json_encode($m->getCategories());
+    }
 
 }
