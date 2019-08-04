@@ -10,7 +10,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="<?= BASE_URL?>assets/css/style.css" />
-        
+
     </head>
     <body>
         <h1>Este é o topo do Meu Menu</h1>
@@ -24,6 +24,5 @@ and open the template in the editor.
         <script type="text/javascript" src="<?= BASE_URL?>assets/js/jquery.min.js"></script>
         <script type="text/javascript" src="<?= BASE_URL?>assets/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="<?= BASE_URL?>assets/js/script.js"></script>
-       
     </body>
 </html>
