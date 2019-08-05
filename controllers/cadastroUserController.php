@@ -16,18 +16,21 @@ class cadastroUserController extends Controller implements interfaceController {
         $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
         $dados = array();
-        if (isset($post['email']) && !empty($post['email'])) {
-            $dados['email'] = addslashes($post['email']);
-            $dados['password'] = addslashes(md5($post['password']));
+        if (isset($post['user_email']) && !empty($post['user_email'])) {
+            $dados['user_name'] = addslashes($post['user_name']);
+            $dados['user_lastname'] = addslashes($post['user_lastname']);
+            $dados['user_email'] = addslashes($post['user_email']);
+            $dados['user_password'] = addslashes(md5($post['user_password']));
 
             $u = new Usuario();
-            if ($u->adicionar($dados)) {
+            $result = $u->adicionar($dados);
+            if ($result[2]) {
                 //redireciona para o perfil do usuário
                 header("Location:../logado");
             } else {
-                /*redireciona para o formulário de cadastro
+                /*retorna ao formulário de cadastro
                 emitindo msg de duplicidade de e-mail*/
-                header("Location:../cadastroUser?addUser=false");
+                header("Location:../cadastroUser?msg=$result[0]");
             }
         }
     }
