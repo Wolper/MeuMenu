@@ -1,10 +1,10 @@
 <?php
 
 /**
- * <b>Create.class:</b>
+ * <b>Create:</b>
  * Classe responsável por cadastros genéticos no banco de dados!
  * 
- * @copyright (c) 2016, Dikson Delgado - Wolper Soluções Tecnológicas
+ * @copyright (c) 2019, Dikson Delgado
  */
 class Create extends Conn {
 
@@ -19,18 +19,18 @@ class Create extends Conn {
     private $Conn;
 
     /**
-     * <b>ExeCreate:</b> Executa um cadastro simplificado no banco de dados utilizando prepared statements.
+     * <b>exeCreate:</b> Executa um cadastro simplificado no banco de dados utilizando prepared statements.
      * Basta informar o nome da tabela e um array atribuitivo com nome da coluna e valor!
      * 
      * @param STRING $Tabela = Informe o nome da tabela no banco!
      * @param ARRAY $Dados = Informe um array atribuitivo. ( Nome Da Coluna => Valor ).
      */
-    public function ExeCreate($Tabela, array $Dados) {
+    public function exeCreate($Tabela, array $Dados) {
         $this->Tabela = (string) $Tabela;
         $this->Dados = $Dados;
 
         $this->getSyntax();
-        $this->Execute();
+        $this->execute();
     }
 
     /**
@@ -47,7 +47,7 @@ class Create extends Conn {
      * ****************************************
      */
     //Obtém o PDO e Prepara a query
-    private function Connect() {
+    private function connect() {
         $this->Conn = parent::getConn();
         $this->Create = $this->Conn->prepare($this->Create);
     }
@@ -60,7 +60,7 @@ class Create extends Conn {
     }
 
     //Obtém a Conexão e a Syntax, executa a query!
-    private function Execute() {
+    private function execute() {
         $this->Connect();
         try {
             $this->Create->execute($this->Dados);

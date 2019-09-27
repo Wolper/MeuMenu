@@ -8,15 +8,15 @@
  */
 class Read extends Conn {
 
-    private $Select;
-    private $Places;
-    private $Result;
+    private $select;
+    private $places;
+    private $result;
 
     /** @var PDOStatement */
-    private $Read;
+    private $read;
 
     /** @var PDO */
-    private $Conn;
+    private $conn;
 
     /**
      * <b>Exe Read:</b> Executa uma leitura simplificada com Prepared Statments. Basta informar o nome da tabela,
@@ -25,13 +25,13 @@ class Read extends Conn {
      * @param STRING $Termos = WHERE | ORDER | LIMIT :limit | OFFSET :offset
      * @param STRING $ParseString = link={$link}&link2={$link2}
      */
-    public function ExeRead($Tabela, $Termos = null, $ParseString = null) {
+    public function exeRead($Tabela, $Termos = null, $ParseString = null) {
         if (!empty($ParseString)):
-            parse_str($ParseString, $this->Places);
+            parse_str($ParseString, $this->places);
         endif;
 
-        $this->Select = "SELECT * FROM {$Tabela} {$Termos}";
-        $this->Execute();
+        $this->select = "SELECT * FROM {$Tabela} {$Termos}";
+        $this->execute();
     }
 
     /**
@@ -40,7 +40,7 @@ class Read extends Conn {
      * @return ARRAY $this = Array ResultSet
      */
     public function getResult() {
-        return $this->Result;
+        return $this->result;
     }
 
     /**
@@ -48,15 +48,15 @@ class Read extends Conn {
      * @return INT $Var = Quantidade de registros encontrados
      */
     public function getRowCount() {
-        return $this->Read->rowCount();
+        return $this->read->rowCount();
     }
 
-    public function FullRead($Query, $ParseString = null) {
-        $this->Select = (string) $Query;
+    public function fullRead($Query, $ParseString = null) {
+        $this->select = (string) $Query;
         if (!empty($ParseString)):
-            parse_str($ParseString, $this->Places);
+            parse_str($ParseString, $this->places);
         endif;
-        $this->Execute();
+        $this->execute();
     }
 
     /**
@@ -66,8 +66,8 @@ class Read extends Conn {
      * @param STRING $ParseString = link={$link}&link2={$link2}
      */
     public function setPlaces($ParseString) {
-        parse_str($ParseString, $this->Places);
-        $this->Execute();
+        parse_str($ParseString, $this->places);
+        $this->execute();
     }
 
     /**
@@ -76,33 +76,33 @@ class Read extends Conn {
      * ****************************************
      */
     //Obtém o PDO e Prepara a query
-    private function Connect() {
-        $this->Conn = parent::getConn();
-        $this->Read = $this->Conn->prepare($this->Select);
-        $this->Read->setFetchMode(PDO::FETCH_ASSOC);
+    private function connect() {
+        $this->conn = parent::getConn();
+        $this->read = $this->conn->prepare($this->select);
+        $this->read->setFetchMode(PDO::FETCH_ASSOC);
     }
 
     //Cria a sintaxe da query para Prepared Statements
     private function getSyntax() {
-        if ($this->Places):
-            foreach ($this->Places as $Vinculo => $Valor):
+        if ($this->places):
+            foreach ($this->places as $Vinculo => $Valor):
                 if ($Vinculo == 'limit' || $Vinculo == 'offset'):
                     $Valor = (int) $Valor;
                 endif;
-                $this->Read->bindValue(":{$Vinculo}", $Valor, ( is_int($Valor) ? PDO::PARAM_INT : PDO::PARAM_STR));
+                $this->read->bindValue(":{$Vinculo}", $Valor, ( is_int($Valor) ? PDO::PARAM_INT : PDO::PARAM_STR));
             endforeach;
         endif;
     }
 
     //Obtém a Conexão e a Syntax, executa a query!
-    private function Execute() {
-        $this->Connect();
+    private function execute() {
+        $this->connect();
         try {
             $this->getSyntax();
-            $this->Read->execute();
-            $this->Result = $this->Read->fetchAll();
+            $this->read->execute();
+            $this->result = $this->read->fetchAll();
         } catch (PDOException $e) {
-            $this->Result = null;
+            $this->result = null;
             WSErro("<b>Erro ao Ler:</b> {$e->getMessage()}", $e->getCode());
         }
     }

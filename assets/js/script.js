@@ -1,28 +1,10 @@
 $(function () {
 
-
-
-
-    //Impede o encaminhamento do formulário de cadastro via PHP
-    $('#formCad').bind('submit', function (e) {
-        e.preventDefault();
-    });
-    //Impede o encaminhamento do formulário de login via PHP
-    $('#formLogin').bind('submit', function (e) {
-        e.preventDefault();
-    });
-    //Impede o encaminhamento do formulário de login via PHP
-    $('#formCadRest').bind('submit', function (e) {
-        e.preventDefault();
-
-
-    });
-
     //Requisição ajax puxa os dados do banco relativo aos estados da federação e encaminha para o select de cadastro da empresa
     $('#selectEstado').focus(function () {
         $.ajax({
             type: 'POST',
-            url: 'http://localhost/ProjetoMeuMenu/ajax/loadEstados',
+            url: 'http://localhost/MeuMenu/ajax/loadEstados',
             dataType: 'json',
             success: function (json) {
                 //Recebe o json de UF e monta os OPTIONS correspondentes
@@ -42,7 +24,7 @@ $(function () {
 
         $.ajax({
             type: 'POST',
-            url: 'http://localhost/ProjetoMeuMenu/ajax/loadCidades',
+            url: 'http://localhost/MeuMenu/ajax/loadCidades',
             data: {estado_id: estado_id},
             dataType: 'json',
             success: function (json) {
@@ -55,124 +37,53 @@ $(function () {
         }
         );
     });
-});
 
-//------------------------------------------------------------------------------
-//Função realiza o login do usuário e o encaminha para o seu perfil
-function login() {
-
-    var dados = $('#formLogin').serialize();
-
-    $.ajax({
-        type: 'POST',
-        url: 'http://localhost/ProjetoMeuMenu/ajax/loginUser',
-        data: dados,
-//            dataType: 'json',
-        success: function (r) {
-
-            if (r === 'true') {
-                window.location.href = "http://localhost/ProjetoMeuMenu/logado";
-            }
-            if (r === 'false') {
-                var aviso = 'Usuário ou senha inválidos!';
-                $('#divLogin').html(aviso);
-                $('input[name=email]').val('');
-                $('input[name=password]').val('');
-            }
-        },
-        error: function () {}
+    //Requisição ajax puxa os dados do banco relativo às categorias dos itens do cardápio e encaminha para o select de cadastro de item de menu
+    $('#selectCategoria').focus(function () {
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost/MeuMenu/ajax/loadCategorias',
+            dataType: 'json',
+            success: function (json) {
+                //Recebe o json de Categorias e monta os OPTIONS correspondentes
+                for (var i in json) {
+                    $('#selectCategoria').append('<option value="' + json[i].category_id + '">' + json[i].name_category + '</option>');
+                }
+            },
+            error: function () {}
+        });
     });
-}
 
-//------------------------------------------------------------------------------
-//Função realiza o cadastro do usuário através com e-mail e senha
-function cadastrarUsuario() {
-
-    if (comparaSenhas() === true) {
-
-        var dados = $('#formCad').serialize();
-
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost/ProjetoMeuMenu/ajax/addUser',
-            data: dados,
-//            dataType: 'json',
-            success: function (r) {
-                if (r === 'true') {
-                    window.location.href = "http://localhost/ProjetoMeuMenu/logado";
-//                    $('#divCad').html('Falta só mais um pouco...');
-//                    window.setTimeout(function () {
-//                        $('#divCad').html(setFormCad());
-//                    }, 2000);
-
-                }
-                if (r === 'false') {
-                    var aviso = "Já existe um usuário cadastrado com este e-mail!";
-                    $('#divCad').html(aviso);
-                    $('input[name=email]').val('');
-                    $('input[name=password]').val('');
-                    $('input[name=passwordRepite]').val('');
-                }
-            },
-            error: function () {}
-        });
-    }
-}
-
-//------------------------------------------------------------------------------            
-//Função finaliza o cadastro do usuário com a inserção dos dados da empresa e seu representante
-function cadastrarRestaurante() {
-//    if (verificaEspacosBranco()) {
-        var dados = $('#formCadRest').serialize();
-
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost/ProjetoMeuMenu/ajax/addRestaurante',
-            data: dados,
-            success: function (r) {
-                if (r === 'true') {
-                    window.location.href = "http://localhost/ProjetoMeuMenu/logado";
-                }
-                if (r === 'false') {
-                    var aviso = "Cadastro não efetuado, tente mais tarde!";
-                    $('#divCad').html(aviso);
-//                $('input[name=cnpjEmpresa]').val('');
-                }
-            },
-            error: function () {}
-        });
-//    }
-}
-
-function verificaEspacosBranco() {
-    if ($('input[name=nome]').val() === '') {
-        return false;
-    }
-}
+    //Chamada da função ao cadastrar usuário, verifica se ambas senhas são iguais
+    comparaSenhas();
+});
 
 //------------------------------------------------------------------------------            
 //Função compara os dois imputs de senha no momento do cadastro do usuário
 function comparaSenhas() {
-    var email = $('input[name=email]').val();
-    var senha1 = $('input[name=password]').val();
-    var senha2 = $('input[name=passwordRepite]').val();
+    $('input[name=passwordRepite]').keypress(function () {
+        var email = $('input[name=email]').val();
+        var senha1 = $('input[name=password]').val();
+        var senha2 = $('input[name=passwordRepite]').val();
 
-    if (senha1.length < 8) {
-        alert('Senhas devem conter ao menos 8 dígitos!');
-        return false;
-    } else {
-        if (email !== '' && senha1 !== '' && senha2 !== '') {
-            if (senha1 !== senha2) {
-                alert('As senhas devem ser iguais!');
-                return false;
-            } else {
-                return true;
-            }
+        if (senha1.length < 8) {
+            $('#divCad').html('Senhas devem conter ao menos 8 dígitos!');
+
         } else {
-            alert('Não é possível cadastrar elementos vazios!');
-            return false;
+            if (email !== '' && senha1 !== '' && senha2 !== '') {
+                if (senha1 !== senha2) {
+                    $('#divCad').html('As senhas devem ser iguais!');
+
+                } else {
+                    $('#divCad').html('');
+
+                }
+            } else {
+                $('#divCad').html('Não é possível cadastrar elementos vazios!');
+
+            }
         }
-    }
+    });
 }
 
 //##############################################################################
