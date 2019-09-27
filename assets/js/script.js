@@ -1,6 +1,6 @@
 $(function () {
 
-    //Requisição ajax puxa os dados do banco relativo aos estados da federação e encaminha para o select de cadastro da empresa
+//Requisição ajax puxa os dados do banco relativo aos estados da federação e encaminha para o select de cadastro da empresa
     $('#selectEstado').focus(function () {
         $.ajax({
             type: 'POST',
@@ -15,13 +15,10 @@ $(function () {
             error: function () {}
         });
     });
-
-
     //Requisição ajax aguarda a escolha da UF para requerer as cidades relativas ao estado da federação selecionado
     $('#selectEstado').change(function () {
         $('#selectCidade').html('');
         var estado_id = $('#selectEstado').val();
-
         $.ajax({
             type: 'POST',
             url: 'http://localhost/MeuMenu/ajax/loadCidades',
@@ -37,7 +34,6 @@ $(function () {
         }
         );
     });
-
     //Requisição ajax puxa os dados do banco relativo às categorias dos itens do cardápio e encaminha para o select de cadastro de item de menu
     $('#selectCategoria').focus(function () {
         $.ajax({
@@ -53,10 +49,63 @@ $(function () {
             error: function () {}
         });
     });
-
+    //Chamada da função para apresentar o menu ao usuário
+    exibeMenu();
     //Chamada da função ao cadastrar usuário, verifica se ambas senhas são iguais
     comparaSenhas();
 });
+//Função que faz requisição ajax puxa os dados do banco relativo aos itens de menu
+//e os exibe na atela ao usuário
+function exibeMenu() {
+    $.ajax({
+        type: 'POST',
+        url: 'http://localhost/MeuMenu/ajax/loadMenu',
+        dataType: 'json',
+        success: function (json) {
+
+            //Recebe o json de Categorias e monta os OPTIONS correspondentes
+            $('#exibeMenu').append('<table>');
+            $('#exibeMenu').append('<th>M E N U</th>');
+
+
+            for (var i in json) {
+
+                if (i !== '0') {
+                    if (json[i].category_id !== json[i - 1].category_id) {
+                        $('#exibeMenu').append('<tr><td>' + json[i].name_category + '</td></tr>');
+                        $('#exibeMenu').append('<tr>');
+                        $('#exibeMenu').append('<td>Item</td>');
+                        $('#exibeMenu').append('<td>Nome</td>');
+                        $('#exibeMenu').append('<td>Descrição</td>');
+                        $('#exibeMenu').append('<td>Quant</td>');
+                        $('#exibeMenu').append('</tr>');
+                    }
+                } else {
+                    $('#exibeMenu').append('<tr><td>' + json[i].name_category + '</td></tr>');
+                    $('#exibeMenu').append('<tr>');
+                    $('#exibeMenu').append('<td>Item</td>');
+                    $('#exibeMenu').append('<td>Imagem</td>');
+                    $('#exibeMenu').append('<td>Nome</td>');
+                    $('#exibeMenu').append('<td>Descrição</td>');
+                    $('#exibeMenu').append('<td>Quant</td>');
+                    $('#exibeMenu').append('</tr>');
+                }
+                var s = parseInt(i) + parseInt(1);
+                $('#exibeMenu').append('<tr>');
+                $('#exibeMenu').append('<td>' + s + '</td>');
+                $('#exibeMenu').append('<td><img src="http://localhost/MeuMenu/assets/images/meumenu.jpg" width="60" height="40" />  </td>');
+                $('#exibeMenu').append('<td>' + json[i].name_item + '</td>');
+                $('#exibeMenu').append('<td>' + json[i].description_item + '</td>');
+                $('#exibeMenu').append('<td>' + json[i].price_item + '</td>');
+                $('#exibeMenu').append('</tr>');
+            }
+            $('#exibeMenu').append('</table>');
+        },
+        error: function () {
+            alert('Erro! Não foi possível adicionar item!');
+        }
+    });
+}
 
 //------------------------------------------------------------------------------            
 //Função compara os dois imputs de senha no momento do cadastro do usuário
@@ -65,22 +114,17 @@ function comparaSenhas() {
         var email = $('input[name=email]').val();
         var senha1 = $('input[name=password]').val();
         var senha2 = $('input[name=passwordRepite]').val();
-
         if (senha1.length < 8) {
             $('#divCad').html('Senhas devem conter ao menos 8 dígitos!');
-
         } else {
             if (email !== '' && senha1 !== '' && senha2 !== '') {
                 if (senha1 !== senha2) {
                     $('#divCad').html('As senhas devem ser iguais!');
-
                 } else {
                     $('#divCad').html('');
-
                 }
             } else {
                 $('#divCad').html('Não é possível cadastrar elementos vazios!');
-
             }
         }
     });

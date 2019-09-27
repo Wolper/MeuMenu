@@ -7,8 +7,8 @@
     <input type='email' name='user_email' required="" /><br>
     Senha:<br>
     <input type='password' name='user_password' required="" /><br>
-    Repita a Senha:<br>
-    <input type='password' name='user_passwordRepite' required='' /><br>
+    
+    <input type='hidden' name='user_status' value="0" /><br>
 
     <input type='submit' value='Enviar' />
 </form>

@@ -17,15 +17,22 @@ else:
     define('PASS', '');
 endif;
 
+//DEFINE SERVIDOR DE E-MAIL ####################################################
+define('MAILUSER', 'diksondelgado@jacresci.com');
+define('MAILPASS', 'mirela3055');
+define('MAILDOMAIN', 'mail.jacresci.com');
+define('MAILPORT', '465');
+define('MAILHOST', 'ns472.hostgator.com.br');
+
 // AUTOLOAD DE CLASSES #########################################################
 spl_autoload_register(function($class) {
 
-    $dir = ['conn', 'controllers', 'models', 'core'];
+    $dir = ['conn', 'controllers', 'models', 'core', 'helpers'];
     $isDir = NULL;
 
     foreach ($dir as $dirName):
         $classe = __DIR__ . DIRECTORY_SEPARATOR . $dirName . DIRECTORY_SEPARATOR . $class . '.php';
-       
+
         if (file_exists($classe) && !is_dir($classe)):
             require_once ($classe);
             $isDir = TRUE;
@@ -36,7 +43,6 @@ spl_autoload_register(function($class) {
         trigger_error('Não foi possível encontrar a classe: ' . $classe, E_USER_ERROR);
         die;
     endif;
-
 });
 
 // TRATAMENTO DE ERROS #####################

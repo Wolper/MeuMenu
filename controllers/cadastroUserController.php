@@ -25,8 +25,18 @@ class cadastroUserController extends Controller implements interfaceController {
             $u = new Usuario();
             $result = $u->adicionar($dados);
             if ($result[2]) {
-                //redireciona para o perfil do usuário
-                header("Location:../logado");
+                //envia e-mail ao usuário cadastrado para validação de e-mail
+             
+                $data['Assunto'] = 'Validação de e-mail';
+                $data['Mensagem'] = '<a href="' . BASE_URL . 'logado.php" >Clique aqui para validar seu e-mail!</a>';;
+                $data['RemetenteNome'] = $dados['user_name'];
+                $data['RemetenteEmail'] = $dados['user_email'];
+                $data['DestinoNome'] = 'Sistema MeuMenu';
+                $data['DestinoEmail'] = 'diksondelgado@jacresci.com';
+                
+                $e = new Email();
+                $e->Enviar($data);
+                
             } else {
                 /* retorna ao formulário de cadastro
                   emitindo msg de duplicidade de e-mail */
@@ -62,7 +72,7 @@ class cadastroUserController extends Controller implements interfaceController {
 
         $u = new Usuario();
         $dataUser = $u->getUser($user_id);
-       
+
         $_SESSION['user_name'] = $dataUser[0]['user_name'];
         $_SESSION['user_lastname'] = $dataUser[0]['user_lastname'];
         header("Location:../");
