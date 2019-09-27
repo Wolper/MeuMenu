@@ -12,19 +12,15 @@ class Usuario {
 
     public function login(array $data) {
         if (isset($data['email']) && !empty($data['email'])) {
-            $email = addslashes($data['email']);
-            $password = addslashes(md5($data['password']));
+            $email = addslashes($data['user_email']);
+            $password = addslashes(md5($data['user_password']));
 
-            self::Connect();
-
-            $this->conn = $this->conn->prepare("SELECT * FROM user WHERE email = :email AND password =:password");
-            $this->conn->bindValue(':email', $email);
-            $this->conn->bindValue(':password', md5($password));
-            $this->conn->execute();
-
-            if ($this->conn->rowCount() > 0) {
+            $readUser = new Read();
+            $readUser->exeRead(self::entity, "WHERE user_email = :user_email AND user_password =:user_password","user_email={$email}&user_password={$password}");
+  
+            if ($readUser->getRowCount() > 0) {
                 //retorna o id do usuário para adicionar na sessão
-                return($this->conn->fetch()['user_id']);
+                return($readUser->getResult()['user_id']);
             } else {
                 return false;
             }
@@ -35,7 +31,7 @@ class Usuario {
 
     public function adicionar(array $data) {
         $readUser = new Read();
-        $readUser->exeRead(self::entity, "WHERE user_email = :email", "email={$data['email']}");
+        $readUser->exeRead(self::entity, "WHERE user_email = :user_email", "user_email={$data['user_email']}");
 
         if ($readUser->getRowCount() > 0):
             $this->result = false;

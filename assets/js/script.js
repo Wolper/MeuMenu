@@ -102,7 +102,7 @@ function exibeMenu() {
             $('#exibeMenu').append('</table>');
         },
         error: function () {
-            alert('Erro! Não foi possível adicionar item!');
+//            alert('Erro! Não foi possível adicionar item!');
         }
     });
 }
