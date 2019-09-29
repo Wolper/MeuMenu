@@ -14,7 +14,7 @@ class loginController extends Controller implements interfaceController {
      public function loginUser() {
         $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
-        if (isset($post['email']) && !empty($post['email'])) {
+        if (isset($post['user_email']) && !empty($post['user_email'])) {
             $u = new Usuario();
             //Se tiver usuário cadastrado, sistema direciona o usuário para seu perfil,
             //caso contrário, redireciona para a página de login

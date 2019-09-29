@@ -12,8 +12,8 @@ class Usuario {
 
     public function login(array $data) {
         if (isset($data['email']) && !empty($data['email'])) {
-            $email = addslashes($data['user_email']);
-            $password = addslashes(md5($data['user_password']));
+            $email = addslashes($data['email']);
+            $password = addslashes(md5($data['password']));
 
             $readUser = new Read();
             $readUser->exeRead(self::entity, "WHERE user_email = :user_email AND user_password =:user_password","user_email={$email}&user_password={$password}");

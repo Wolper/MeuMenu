@@ -28,7 +28,7 @@ class cadastroUserController extends Controller implements interfaceController {
                 //envia e-mail ao usuário cadastrado para validação de e-mail
              
                 $data['Assunto'] = 'Validação de e-mail';
-                $data['Mensagem'] = '<a href="' . BASE_URL . 'logado.php" >Clique aqui para validar seu e-mail!</a>';;
+                $data['Mensagem'] = '<a href="' . BASE_URL . 'logado.php" >Clique aqui para validar seu e-mail!</a>';
                 $data['RemetenteNome'] = $dados['user_name'];
                 $data['RemetenteEmail'] = $dados['user_email'];
                 $data['DestinoNome'] = 'Sistema MeuMenu';
