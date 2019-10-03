@@ -10,7 +10,7 @@
     </form>
 </div>
 <div>
-    <form method='POST' action="cadastroMenu/addItemMenu" >
+    <form method='POST' action="cadastroMenu/addItemMenu" enctype="multipart/form-data" >
         <h4>Adicione um item no Menu</h4>
         Categoria:<br>
         <select id='selectCategoria' name='category_id' required="" >
@@ -21,12 +21,15 @@
         <input type='text' name='description_item' required=""  /><br>
         Preço em R$:<br>
         <input type='text' name='price_item' required=""  /><br>
+        Imagem:<br>
+        <input type="file" name="imagem" />
 
         <input type='submit' value='Enviar' name="cadastroItemMenu" />       
     </form>
     <a href="<?= BASE_URL ?>logado" >Sair</a>
 </div>
 <div id="divLogin"><?= (isset($_GET['status']) && !empty($_GET['status'])) ? ($_GET['status'] == 'true') ? 'Item cadastrado com sucesso!' : 'O item não foi cadastrado, tente mais tarde!' : '' ?></div>
+<div id="divLogin"><?= (isset($_GET['cat']) && !empty($_GET['cat'])) ? ($_GET['cat'] == 'true') ? 'Categoria cadastrada com sucesso!' : 'A categoria não foi cadastrado, tente mais tarde!' : '' ?></div>
 
 <div id="exibeMenu"></div>
 

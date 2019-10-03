@@ -17,12 +17,26 @@ class cadastroMenuController extends Controller implements interfaceController {
         $menu = new Menu();
         foreach ($menu->get() as $key):
             array_push($data, $key);
-        endforeach;  
+        endforeach;
 //        die(var_dump($data));
         return $data;
     }
 
     public function addItemMenu() {
+
+        if (isset($_FILES['imagem']['tmp_name']) && empty($_FILES['imagem'])):
+            $file = $_FILES;
+            if (Image::validarTipoImagem($file)):
+                echo 'Imagem válida!';
+            else:
+                echo 'Imagem inválida!';
+            endif;
+            die;
+        else:
+            echo 'sem imagem';
+           die;
+        endif;
+
         $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         if (isset($post['category_id']) && !empty($post['category_id'])) {
             $data = array();
@@ -32,7 +46,7 @@ class cadastroMenuController extends Controller implements interfaceController {
             $data['price_item'] = str_replace(',', '.', addslashes($post['price_item']));
 
             $itemMenu = new Menu();
-            if ($itemMenu->add($data)):
+            if ($itemMenu->addItem($data)):
 
                 header("Location: http://localhost/MeuMenu/cadastroMenu?status=true");
             else:
@@ -40,23 +54,22 @@ class cadastroMenuController extends Controller implements interfaceController {
             endif;
         }
     }
-    
+
     public function addCategoria() {
         $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         if (isset($post['name_category']) && !empty($post['name_category'])) {
             $data = array();
             $data['name_category'] = addslashes($post['name_category']);
             $data['description_category'] = addslashes($post['description_category']);
-       
+
             $itemMenu = new Menu();
             if ($itemMenu->addCategory($data)):
 
-                header("Location: http://localhost/MeuMenu/cadastroMenu?status=true");
+                header("Location: http://localhost/MeuMenu/cadastroMenu?cat=true");
             else:
-                header("Location: http://localhost/MeuMenu/cadastroMenu?status=false");
+                header("Location: http://localhost/MeuMenu/cadastroMenu?cat=false");
             endif;
         }
     }
-
 
 }

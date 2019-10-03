@@ -5,6 +5,7 @@
     <li>Meu Menu</li>
     <li>Meus dados</li>
     <li>Configurações</li>
+    <li>Relatórios</li>
 </ul>
 
 <div>

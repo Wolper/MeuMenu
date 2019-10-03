@@ -11,59 +11,27 @@
  *
  * @author dikson
  */
-class Menu extends Conn {
+class Menu {
 
-    private $conn;
-
-    private function Connect() {
-        $this->conn = parent::getConn();
+    public function addCategory($data) {
+        $createCat = new Create();
+        $createCat->exeCreate('category', $data);
+        if($createCat->getResult()):
+            return TRUE;
+        else:
+            return FALSE;
+        endif;
     }
-
-//    public function adicionar(array $data) {
-//
-//        self::Connect();
-//
-//
-//        $sql = $this->conn->prepare("SELECT `restaurant_id` FROM `restaurant` WHERE `cnpj` =:cnpj");
-//        $sql->bindValue(":cnpj", $data['cnpj']);
-//        $sql->execute();
-//
-//        if ($sql->rowCount() > 0):
-//            return false;
-//
-//        else:
-//            $sql = $this->conn->prepare("INSERT INTO restaurant SET nome =:nome, cpf =:cpf, telefone =:telefone, user_id =:user_id, razao_social =:razao_social, nome_fantasia =:nome_fantasia, cnpj =:cnpj, tel_emp =:tel_emp, logradouro =:logradouro, numero =:numero, bairro =:bairro, cidade =:cidade, uf =:uf");
-//
-//            $sql->bindValue(":nome", $data['nome']);
-//            $sql->bindValue(':cpf', $data['cpf']);
-//            $sql->bindValue(":telefone", $data['telefone']);
-//            $sql->bindValue(":user_id", $data['user_id']);
-//            $sql->bindValue(":razao_social", $data['razao_social']);
-//            $sql->bindValue(':nome_fantasia', $data['nome_fantasia']);
-//            $sql->bindValue(":cnpj", $data['cnpj']);
-//            $sql->bindValue(':tel_emp', $data['tel_emp']);
-//            $sql->bindValue(':logradouro', $data['logradouro']);
-//            $sql->bindValue(":numero", $data['numero']);
-//            $sql->bindValue(':bairro', $data['bairro']);
-//            $sql->bindValue(":cidade", $data['cidade']);
-//            $sql->bindValue(':uf', $data['uf']);
-//
-//            $sql->execute();
-//            return true;
-//        endif;
-//    }
-//
-//    private function getIdRestaurant($cnpj) {
-//        self::Connect();
-//
-//        $sql = $this->conn->prepare("SELECT `restaurant_id` FROM `restaurant` WHERE `cnpj` =:cnpj");
-//        $sql->bindValue(":cnpj", $cnpj);
-//        $sql->execute();
-//
-//        if ($sql->rowCount() > 0) {
-//            return $sql->fetch()['restaurant_id'];
-//        }
-//    }
+    
+    public function addItem($data){
+        $createItem = new Create();
+        $createItem->exeCreate('menu_item', $data);
+         if($createItem->getResult()):
+            return TRUE;
+        else:
+            return FALSE;
+        endif;
+    }
 
     public function getCategories() {
 
