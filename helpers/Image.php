@@ -25,7 +25,7 @@ class Image {
         
             $fileType = $file['imagem']['type'];
             if (in_array($fileType, $tipos)):
-                die(var_dump($file));
+                return TRUE;
             else:
                 return FALSE;
             endif;

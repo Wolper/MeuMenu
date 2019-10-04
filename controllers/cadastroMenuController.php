@@ -24,17 +24,17 @@ class cadastroMenuController extends Controller implements interfaceController {
 
     public function addItemMenu() {
 
-        if (isset($_FILES['imagem']['tmp_name']) && empty($_FILES['imagem'])):
+        if (isset($_FILES['imagem']['tmp_name']) && !empty($_FILES['imagem'])):
             $file = $_FILES;
             if (Image::validarTipoImagem($file)):
                 echo 'Imagem válida!';
             else:
                 echo 'Imagem inválida!';
             endif;
-            die;
+          
         else:
             echo 'sem imagem';
-           die;
+        
         endif;
 
         $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -44,10 +44,10 @@ class cadastroMenuController extends Controller implements interfaceController {
             $data['category_id'] = addslashes($post['category_id']);
             $data['description_item'] = addslashes($post['description_item']);
             $data['price_item'] = str_replace(',', '.', addslashes($post['price_item']));
+            $data['image_item'] = $file['imagem']['tmp_name'];
 
             $itemMenu = new Menu();
             if ($itemMenu->addItem($data)):
-
                 header("Location: http://localhost/MeuMenu/cadastroMenu?status=true");
             else:
                 header("Location: http://localhost/MeuMenu/cadastroMenu?status=false");
@@ -71,5 +71,4 @@ class cadastroMenuController extends Controller implements interfaceController {
             endif;
         }
     }
-
 }

@@ -17,6 +17,14 @@ else:
     define('PASS', '');
 endif;
 
+//DEFINE AUTH FACEBOOK #########################################################
+define("FACEBOOK", [
+    'app_id' => '774376016325592',
+    'app_secret' => '3704dcf670ac3aac6950714faa08ee28',
+    'app_redirect' => 'https://localhost/meumenu',
+    'app_version' => 'v4.0',
+]);
+
 //DEFINE SERVIDOR DE E-MAIL ####################################################
 define('MAILUSER', 'diksondelgado@jacresci.com');
 define('MAILPASS', 'mirela3055');
