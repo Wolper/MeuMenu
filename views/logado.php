@@ -1,5 +1,6 @@
 <h1>Sessão do usuário</h1>
 
+
 <ul>
     <li><a href="<?= BASE_URL . 'cadastroRestaurante' ?>">Cadastre seu restaurante</a></li>
     <li>Meu Menu</li>

@@ -93,7 +93,8 @@ function exibeMenu() {
                 var s = parseInt(i) + parseInt(1);
                 $('#exibeMenu').append('<tr>');
                 $('#exibeMenu').append('<td>' + s + '</td>');
-                $('#exibeMenu').append('<td><img src="http://localhost/MeuMenu/assets/images/meumenu.jpg" width="60" height="40" />  </td>');
+                $('#exibeMenu').append('<td>' + json[i].image_item + '</td>');
+//                $('#exibeMenu').append('<td><img src="http://localhost/MeuMenu/assets/images/meumenu.jpg" width="60" height="40" />  </td>');
                 $('#exibeMenu').append('<td>' + json[i].name_item + '</td>');
                 $('#exibeMenu').append('<td>' + json[i].description_item + '</td>');
                 $('#exibeMenu').append('<td>' + json[i].price_item + '</td>');
@@ -128,6 +129,36 @@ function comparaSenhas() {
             }
         }
     });
+}
+
+function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    var userId = profile.getId();
+    var userName = profile.getName();
+    var userImage = profile.getImageUrl();
+    var userEmail = profile.getEmail();
+    var userToken = googleUser.getAuthResponse().id_token;
+
+    if (userEmail !== '') {
+        var dados = {
+            userId: userId,
+            userName: userName,
+            userImage: userImage,
+            userEmail: userEmail
+        };
+        $.post('http://localhost/MeuMenu/ajax/validaEmailGoogle', dados, function (retorno) {
+            if (retorno === '"false"') {
+                var msg = "Não há usuário com esse e-mail!";
+                document.getElementById("msg").innerHTML = msg;
+            } else {
+                window.location.href = 'logado';
+
+            }
+        });
+    } else {
+        var msg = "Usuário não encontrado!";
+        document.getElementById("msg").innerHTML = msg;
+    }
 }
 
 //##############################################################################

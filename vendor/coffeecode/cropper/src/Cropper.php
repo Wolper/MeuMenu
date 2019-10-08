@@ -113,7 +113,7 @@ class Cropper
      * @param int|null $height
      * @return null|string
      */
-    private function imageCache(int $width, int $height = null): ?string
+    private function imageCache(int $width, int $height = null): string
     {
         list($src_w, $src_h) = getimagesize($this->imagePath);
         $height = ($height ?? ($width * $src_h) / $src_w);

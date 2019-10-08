@@ -11,7 +11,7 @@ class loginController extends Controller implements interfaceController {
         $this->loadTemplate('login', $dados);
     }
 
-     public function loginUser() {
+    public function loginUser() {
         $post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
         if (isset($post['user_email']) && !empty($post['user_email'])) {
@@ -27,4 +27,13 @@ class loginController extends Controller implements interfaceController {
             }
         }
     }
+
+    public function loginFacebook() {
+        if (empty($_SESSION['userLogin'])):
+            echo 'Não logado';
+        else:
+            echo 'User Name';
+        endif;
+    }
+
 }

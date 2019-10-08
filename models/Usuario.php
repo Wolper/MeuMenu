@@ -16,8 +16,8 @@ class Usuario {
             $password = addslashes(md5($data['password']));
 
             $readUser = new Read();
-            $readUser->exeRead(self::entity, "WHERE user_email = :user_email AND user_password =:user_password","user_email={$email}&user_password={$password}");
-  
+            $readUser->exeRead(self::entity, "WHERE user_email = :user_email AND user_password =:user_password", "user_email={$email}&user_password={$password}");
+
             if ($readUser->getRowCount() > 0) {
                 //retorna o id do usuário para adicionar na sessão
                 return($readUser->getResult()['user_id']);
@@ -58,7 +58,18 @@ class Usuario {
         $readUser->exeRead(self::entity, "WHERE user_id = :user_id", "user_id={$user_id}");
 
         if ($readUser->getRowCount() > 0):
-           return $this->result = $readUser->getResult();
+            return $this->result = $readUser->getResult();
+        endif;
+    }
+
+    public function emailExists($email) {
+        $readUser = new Read();
+        $readUser->exeRead(self::entity, "WHERE user_email = :user_email", "user_email={$email}");
+
+        if ($readUser->getRowCount() > 0):
+            return $readUser->getResult()[0]['user_id'];
+        else:
+            return false;
         endif;
     }
 
